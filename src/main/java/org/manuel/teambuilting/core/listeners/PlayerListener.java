@@ -4,7 +4,7 @@ import static org.manuel.teambuilting.core.listeners.PlayerListener.LISTENER_ID;
 
 import javax.inject.Inject;
 
-import org.manuel.teambuilting.core.messages.PlayerDeletedMessage;
+import org.manuel.teambuilting.messages.PlayerDeletedMessage;
 import org.manuel.teambuilting.core.repositories.PlayerToTeamRepository;
 import org.manuel.teambuilting.core.repositories.PlayerToTeamSportDetailsRepository;
 import org.springframework.amqp.core.ExchangeTypes;

@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.core.messages;
+package org.manuel.teambuilting.messages;
 
 import java.util.Date;
 
@@ -11,11 +11,11 @@ import lombok.Data;
 
 /**
  * @author Manuel Doncel Martos
- * @since 11/01/2017.
+ * @since 07/12/2016.
  */
 @Data
 @AllArgsConstructor
-public class TeamCreatedMessage {
+public class TeamVisitedMessage {
 
     @NotNull
     private final Team team;

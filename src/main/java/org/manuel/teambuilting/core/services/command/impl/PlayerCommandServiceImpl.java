@@ -3,7 +3,7 @@ package org.manuel.teambuilting.core.services.command.impl;
 import com.auth0.authentication.result.UserProfile;
 import org.manuel.teambuilting.core.aspects.UserDataDeletePlayer;
 import org.manuel.teambuilting.core.aspects.UserDataSave;
-import org.manuel.teambuilting.core.messages.PlayerDeletedMessage;
+import org.manuel.teambuilting.messages.PlayerDeletedMessage;
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.repositories.PlayerRepository;
 import org.manuel.teambuilting.core.services.command.PlayerCommandService;

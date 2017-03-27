@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import org.manuel.teambuilting.core.aspects.UserDataSave;
-import org.manuel.teambuilting.core.messages.TeamCreatedMessage;
+import org.manuel.teambuilting.messages.TeamCreatedMessage;
 import org.manuel.teambuilting.core.model.Team;
 import org.manuel.teambuilting.core.repositories.TeamRepository;
 import org.manuel.teambuilting.core.services.command.TeamCommandService;

@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.core.messages;
+package org.manuel.teambuilting.messages;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

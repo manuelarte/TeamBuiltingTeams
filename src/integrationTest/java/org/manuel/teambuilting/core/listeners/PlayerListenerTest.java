@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.manuel.teambuilting.core.messages.PlayerDeletedMessage;
+import org.manuel.teambuilting.messages.PlayerDeletedMessage;
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.model.PlayerToTeam;
 import org.manuel.teambuilting.core.model.PlayerToTeamSportDetails;

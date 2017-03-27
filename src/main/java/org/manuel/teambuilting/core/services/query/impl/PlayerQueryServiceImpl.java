@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.manuel.teambuilting.core.messages.PlayerVisitedMessage;
+import org.manuel.teambuilting.messages.PlayerVisitedMessage;
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.repositories.PlayerRepository;
 import org.manuel.teambuilting.core.services.query.PlayerQueryService;

@@ -1,7 +1,7 @@
 package org.manuel.teambuilting.core.listeners;
 
-import org.manuel.teambuilting.core.messages.TeamDeletedMessage;
-import org.manuel.teambuilting.core.messages.TeamVisitedMessage;
+import org.manuel.teambuilting.messages.TeamDeletedMessage;
+import org.manuel.teambuilting.messages.TeamVisitedMessage;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;

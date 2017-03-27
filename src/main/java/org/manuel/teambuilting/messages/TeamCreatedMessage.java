@@ -1,24 +1,24 @@
-package org.manuel.teambuilting.core.messages;
+package org.manuel.teambuilting.messages;
 
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
-import org.manuel.teambuilting.core.model.Player;
+import org.manuel.teambuilting.core.model.Team;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
  * @author Manuel Doncel Martos
- * @since 07/12/2016.
+ * @since 11/01/2017.
  */
 @Data
 @AllArgsConstructor
-public class PlayerVisitedMessage {
+public class TeamCreatedMessage {
 
     @NotNull
-    private final Player player;
+    private final Team team;
 
     private final String userId;
 

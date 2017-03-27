@@ -1,10 +1,10 @@
-package org.manuel.teambuilting.core.messages;
+package org.manuel.teambuilting.messages;
 
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
-import org.manuel.teambuilting.core.model.Team;
+import org.manuel.teambuilting.core.model.Player;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +15,10 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class TeamVisitedMessage {
+public class PlayerVisitedMessage {
 
     @NotNull
-    private final Team team;
+    private final Player player;
 
     private final String userId;
 
