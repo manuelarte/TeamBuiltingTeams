@@ -1,19 +1,17 @@
 package org.manuel.teambuilting.core.listeners;
 
-import static org.manuel.teambuilting.core.listeners.PlayerListener.LISTENER_ID;
+import lombok.AllArgsConstructor;
+import org.manuel.teambuilting.core.repositories.PlayerGeocodingRepository;
+import org.manuel.teambuilting.core.repositories.PlayerToTeamRepository;
+import org.manuel.teambuilting.core.repositories.PlayerToTeamSportDetailsRepository;
+import org.manuel.teambuilting.messages.PlayerDeletedMessage;
+import org.springframework.amqp.core.ExchangeTypes;
+import org.springframework.amqp.rabbit.annotation.*;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 
-import org.manuel.teambuilting.messages.PlayerDeletedMessage;
-import org.manuel.teambuilting.core.repositories.PlayerToTeamRepository;
-import org.manuel.teambuilting.core.repositories.PlayerToTeamSportDetailsRepository;
-import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
+import static org.manuel.teambuilting.core.listeners.PlayerListener.LISTENER_ID;
 
 /**
  * Listener for the player topic
@@ -26,23 +24,20 @@ import org.springframework.stereotype.Component;
         exchange = @Exchange(durable = "${messaging.amqp.player.exchange.durable}", value = "${messaging.amqp.player.exchange.name}", type = ExchangeTypes.TOPIC),
         key = "player.deleted"))
 @Component
+@AllArgsConstructor
 public class PlayerListener {
 
     public static final String LISTENER_ID = "PlayerListenerId";
 
     private final PlayerToTeamRepository playerToTeamRepository;
     private final PlayerToTeamSportDetailsRepository playerToTeamSportDetailsRepository;
-
-    @Inject
-    public PlayerListener(final PlayerToTeamRepository playerToTeamRepository, final PlayerToTeamSportDetailsRepository playerToTeamSportDetailsRepository) {
-        this.playerToTeamRepository = playerToTeamRepository;
-        this.playerToTeamSportDetailsRepository = playerToTeamSportDetailsRepository;
-    }
+    private final PlayerGeocodingRepository playerGeocodingRepository;
 
     @RabbitHandler
     public void handle(final PlayerDeletedMessage message) {
         playerToTeamRepository.delete(playerToTeamRepository.findByPlayerId(message.getPlayer().getId()));
         playerToTeamSportDetailsRepository.delete(playerToTeamSportDetailsRepository.findByPlayerId(message.getPlayer().getId()));
+        playerGeocodingRepository.delete(playerGeocodingRepository.findByEntityId(message.getPlayer().getId()));
     }
 
 }
