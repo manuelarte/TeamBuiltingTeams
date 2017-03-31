@@ -71,6 +71,35 @@ public class PlayerHistoryTest {
 		playerToTeamService.savePlayerToTeam(notAllowedEntry);
 	}
 
+	@Test
+	public void testUpdateEntityWithSameValues() {
+		final Player player = playerRepository.save(new Player("name", "nickname",
+				'M', "address", "imageLink"));
+		final Date teamToDate = new Date();
+		final Date teamFromDate = changeDate(teamToDate, -2, Calendar.YEAR);
+		final Team team = teamRepository.save(new Team("name", "location", "sport", "bio", teamFromDate, teamToDate));
+
+		final Date playerToTeamFromDate = teamFromDate;
+		final Date playerToTeamToDate = teamToDate;
+		final PlayerToTeam saved = playerToTeamRepository.save(new PlayerToTeam(player.getId(), team.getId(), playerToTeamFromDate, playerToTeamToDate));
+		playerToTeamService.savePlayerToTeam(saved);
+	}
+
+	@Test
+	public void testUpdateEntityChangingFromDate() {
+		final Player player = playerRepository.save(new Player("name", "nickname",
+				'M', "address", "imageLink"));
+		final Date teamToDate = new Date();
+		final Date teamFromDate = changeDate(teamToDate, -2, Calendar.YEAR);
+		final Team team = teamRepository.save(new Team("name", "location", "sport", "bio", teamFromDate, teamToDate));
+
+		final Date playerToTeamFromDate = teamFromDate;
+		final Date playerToTeamToDate = teamToDate;
+		final PlayerToTeam saved = playerToTeamRepository.save(new PlayerToTeam(player.getId(), team.getId(), playerToTeamFromDate, playerToTeamToDate));
+		saved.setFromDate(changeDate(saved.getFromDate(), +2, Calendar.MONTH));
+		playerToTeamService.savePlayerToTeam(saved);
+	}
+
 	@Ignore
 	@Test(expected = ValidationRuntimeException.class)
 	public void testCannotStorePlayerHistoryAfterEndOfTheTeam() {

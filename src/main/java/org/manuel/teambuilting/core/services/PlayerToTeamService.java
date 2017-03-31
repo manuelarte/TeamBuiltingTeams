@@ -3,13 +3,6 @@
  */
 package org.manuel.teambuilting.core.services;
 
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
 import org.manuel.teambuilting.core.exceptions.ValidationRuntimeException;
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.model.PlayerToTeam;
@@ -18,6 +11,12 @@ import org.manuel.teambuilting.core.repositories.PlayerRepository;
 import org.manuel.teambuilting.core.repositories.PlayerToTeamRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Manuel Doncel Martos
@@ -50,7 +49,7 @@ public class PlayerToTeamService {
 	@PreAuthorize("hasAuthority('user') or hasAuthority('admin')")
 	public PlayerToTeam savePlayerToTeam(final PlayerToTeam playerToTeam) {
 		final Collection<PlayerToTeam> historyOfThePlayerInTheTeamOverlapped = playerToTeamRepository
-			.findByPlayerIdAndTeamId(playerToTeam.getPlayerId(), playerToTeam.getTeamId()).stream().filter(entry -> isOverlapping(playerToTeam, entry)).collect(Collectors.toList());
+			.findByPlayerIdAndTeamId(playerToTeam.getPlayerId(), playerToTeam.getTeamId()).stream().filter(entry -> !entry.getId().equals(playerToTeam.getId()) && isOverlapping(playerToTeam, entry)).collect(Collectors.toList());
         if (!historyOfThePlayerInTheTeamOverlapped.isEmpty()) {
             throw new ValidationRuntimeException("", "Entry overlapped", "Entry overlapped");
         }
