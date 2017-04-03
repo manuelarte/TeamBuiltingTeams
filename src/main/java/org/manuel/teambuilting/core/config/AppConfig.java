@@ -22,10 +22,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class AppConfig extends Auth0SecurityConfig {
 
-	public AppConfig() {
-
-	}
-
 	/**
 	 * Provides Auth0 API access
 	 */
