@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.manuel.teambuilting.messages.TeamVisitedMessage;
+import org.manuel.teambuilting.messages.TeamVisitedEvent;
 import org.manuel.teambuilting.core.model.Team;
 import org.manuel.teambuilting.core.repositories.TeamRepository;
 import org.manuel.teambuilting.core.services.query.TeamQueryService;
@@ -57,7 +57,7 @@ class TeamQueryServiceImpl extends AbstractQueryService<Team, String, TeamReposi
 	private void sendTeamVisitedMessage(final Team visitedTeam) {
 		final Optional<UserProfile> userProfile = util.getUserProfile();
 		final String userId = userProfile.isPresent() ? userProfile.get().getId() : null;
-		final TeamVisitedMessage message = new TeamVisitedMessage(visitedTeam, userId, new Date());
+		final TeamVisitedEvent message = new TeamVisitedEvent(visitedTeam.getId(), userId, new Date());
 		rabbitTemplate.convertAndSend(teamExchangeName, TEAM_VISITED_ROUTING_KEY, message);
 	}
 

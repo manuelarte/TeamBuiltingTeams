@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.manuel.teambuilting.messages.PlayerVisitedMessage;
+import org.manuel.teambuilting.messages.PlayerVisitedEvent;
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.repositories.PlayerRepository;
 import org.manuel.teambuilting.core.services.query.PlayerQueryService;
@@ -61,7 +61,7 @@ class PlayerQueryServiceImpl extends AbstractQueryService<Player, String, Player
 	private void sendPlayerVisitedMessage(final Player visitedPlayer) {
 		final Optional<UserProfile> userProfile = util.getUserProfile();
 		final String userId = userProfile.isPresent() ? userProfile.get().getId() : null;
-		final PlayerVisitedMessage message = new PlayerVisitedMessage(visitedPlayer, userId, new Date());
+		final PlayerVisitedEvent message = new PlayerVisitedEvent(visitedPlayer.getId(), userId, new Date());
 		rabbitTemplate.convertAndSend(playerExchangeName, PLAYER_VISITED_ROUTING_KEY, message);
 	}
 

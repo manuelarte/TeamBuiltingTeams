@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.manuel.teambuilting.messages.PlayerDeletedMessage;
+import org.manuel.teambuilting.messages.PlayerDeletedEvent;
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.model.PlayerToTeam;
 import org.manuel.teambuilting.core.model.PlayerToTeamSportDetails;
@@ -54,14 +54,14 @@ public class PlayerListenerTest {
 		savePlayerToTeam(player);
 		savePlayerToTeamSportDetails(player);
 
-		final PlayerDeletedMessage event = PlayerDeletedMessage.builder().player(player).date(new Date()).userId("userId").build();
+		final PlayerDeletedEvent event = PlayerDeletedEvent.builder().playerId(player.getId()).date(new Date()).userId("userId").build();
 
 		rabbitTemplate.convertAndSend(playerExchange, "player.deleted", event);
 
 		InvocationData data = harness.getNextInvocationDataFor(PlayerListener.LISTENER_ID, 5, TimeUnit.SECONDS);
 		assertNotNull(data);
 		assertEquals(1, data.getArguments().length);
-		assertEquals(event, ((PlayerDeletedMessage) data.getArguments()[0]));
+		assertEquals(event, ((PlayerDeletedEvent) data.getArguments()[0]));
 		assertEquals(0, playerToTeamRepository.findAll().size());
 		assertEquals(0, playerToTeamSportDetailsRepository.findAll().size());
 	}

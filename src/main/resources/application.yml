@@ -9,18 +9,19 @@ messaging:
   amqp:
     team:
       exchange:
-        name: teambuilting.ex.team
+        name: TEAMBUILTING.E.TEAM
         durable: true
-      queue:
-        name: teambuilting.q.team
-        binding: team.#
+        autodelete: false
     player:
       exchange:
-        name: teambuilting.ex.player
+        name: TEAMBUILTING.E.PLAYER
         durable: true
+        autodelete: false
       queue:
-        name: teambuilting.q.player
-        binding: player.#
+        name: TEAMBUILTING.Q.CORE.PLAYER
+        binding: player.deleted
+        durable: true
+        autodelete: false
 
 
 google:

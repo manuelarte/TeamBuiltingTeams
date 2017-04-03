@@ -1,20 +1,22 @@
 package org.manuel.teambuilting.core.services.command.impl;
 
 import com.auth0.authentication.result.UserProfile;
+
+import java.util.Date;
+
+import javax.inject.Inject;
+
 import org.manuel.teambuilting.core.aspects.UserDataDeletePlayer;
 import org.manuel.teambuilting.core.aspects.UserDataSave;
-import org.manuel.teambuilting.messages.PlayerDeletedMessage;
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.repositories.PlayerRepository;
 import org.manuel.teambuilting.core.services.command.PlayerCommandService;
 import org.manuel.teambuilting.core.util.Util;
+import org.manuel.teambuilting.messages.PlayerDeletedEvent;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-
-import javax.inject.Inject;
-import java.util.Date;
 
 @Service
 class PlayerCommandServiceImpl implements PlayerCommandService {
@@ -46,13 +48,13 @@ class PlayerCommandServiceImpl implements PlayerCommandService {
 	public void delete(final String playerId) {
 		final Player playerToBeDeleted = playerRepository.findOne(playerId);
 		playerRepository.delete(playerId);
-		sendPlayerDeletedMessage(playerToBeDeleted);
+		sendPlayerDeletedEvent(playerToBeDeleted);
 	}
 
-	private void sendPlayerDeletedMessage(final Player player) {
+	private void sendPlayerDeletedEvent(final Player player) {
 		final UserProfile userProfile = util.getUserProfile().get();
-		final PlayerDeletedMessage message = new PlayerDeletedMessage(player, userProfile.getId(), new Date());
-		rabbitTemplate.convertAndSend(playerExchangeName, PlayerDeletedMessage.ROUTING_KEY, message);
+		final PlayerDeletedEvent event = new PlayerDeletedEvent(player.getId(), userProfile.getId(), new Date());
+		rabbitTemplate.convertAndSend(playerExchangeName, event.getRoutingKey(), event);
 	}
 
 }

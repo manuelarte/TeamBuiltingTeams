@@ -1,10 +1,10 @@
 package org.manuel.teambuilting.messages;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
-
-import org.manuel.teambuilting.core.model.Team;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,13 +15,20 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class TeamCreatedMessage {
+public class TeamRegisteredEvent {
+
+    public static final String ROUTING_KEY = "team.registered";
 
     @NotNull
-    private final Team team;
+    private final String teamId;
 
     private final String userId;
 
     @NotNull
     private final Date date;
+
+    @JsonIgnore
+    public String getRoutingKey() {
+        return ROUTING_KEY;
+    }
 }

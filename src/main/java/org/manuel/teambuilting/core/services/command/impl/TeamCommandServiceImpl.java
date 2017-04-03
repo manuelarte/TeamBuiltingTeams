@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import org.manuel.teambuilting.core.aspects.UserDataSave;
-import org.manuel.teambuilting.messages.TeamCreatedMessage;
+import org.manuel.teambuilting.messages.TeamRegisteredEvent;
 import org.manuel.teambuilting.core.model.Team;
 import org.manuel.teambuilting.core.repositories.TeamRepository;
 import org.manuel.teambuilting.core.services.command.TeamCommandService;
@@ -27,8 +27,6 @@ import org.springframework.util.Assert;
  */
 @Service
 class TeamCommandServiceImpl implements TeamCommandService {
-
-	private static final String TEAM_CREATED_ROUTING_KEY = "team.created";
 
 	private final String teamExchangeName;
 	private final TeamRepository teamRepository;
@@ -56,14 +54,14 @@ class TeamCommandServiceImpl implements TeamCommandService {
 	public Team save(final Team team) {
 		Assert.notNull(team);
 		final Team savedTeam = teamRepository.save(team);
-		sendTeamCreatedMessage(savedTeam);
+		sendTeamCreatedEvent(savedTeam);
 		return savedTeam;
 	}
 
-	private void sendTeamCreatedMessage(final Team savedTeam) {
+	private void sendTeamCreatedEvent(final Team savedTeam) {
 		final UserProfile userProfile = util.getUserProfile().get();
-		final TeamCreatedMessage message = new TeamCreatedMessage(savedTeam, userProfile.getId(), new Date());
-		rabbitTemplate.convertAndSend(teamExchangeName, TEAM_CREATED_ROUTING_KEY, message);
+		final TeamRegisteredEvent event = new TeamRegisteredEvent(savedTeam.getId(), userProfile.getId(), new Date());
+		rabbitTemplate.convertAndSend(teamExchangeName, event.getRoutingKey(), event);
 	}
 
 }

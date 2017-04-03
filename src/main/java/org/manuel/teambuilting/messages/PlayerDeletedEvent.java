@@ -1,13 +1,14 @@
 package org.manuel.teambuilting.messages;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.manuel.teambuilting.core.model.Player;
-
-import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * Event Message to show that a player was deleted
@@ -18,12 +19,12 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @Builder
-public class PlayerDeletedMessage {
+public class PlayerDeletedEvent {
 
     public static final String ROUTING_KEY = "player.deleted";
 
     @NotNull
-    private final Player player;
+    private final String playerId;
 
     @NotNull
     private final String userId;
