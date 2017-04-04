@@ -35,9 +35,14 @@ class PlayerToTeamCommandServiceImpl extends AbstractCommandService<PlayerToTeam
 	}
 
 	private <T extends TimeSlice> boolean isOverlapping(final T entryOne, final T entryTwo) {
-        final boolean entryOneInsideEntryTwo = entryOne.getFromDate().after(entryTwo.getFromDate()) &&  entryOne.getToDate().before(entryTwo.getToDate());
-	    final boolean fromDateBetweenEntryOneDates = entryTwo.getFromDate().after(entryOne.getFromDate()) && entryTwo.getFromDate().before(entryOne.getToDate()) && entryTwo.getFromDate().before(entryOne.getToDate());
-		final boolean toDateBetweenEntryOneDates = entryTwo.getToDate().after(entryOne.getFromDate()) && entryTwo.getToDate().before(entryOne.getToDate());
-		return entryOneInsideEntryTwo || fromDateBetweenEntryOneDates || toDateBetweenEntryOneDates;
+		if (entryOne.getFromDate().equals(entryTwo.getFromDate())) {
+			return true;
+		}
+		else if (entryOne.getFromDate().after(entryTwo.getFromDate())) {
+			return isOverlapping(entryTwo, entryOne);
+		} else {
+			final boolean entryTwoFromDateBetweenEntryOneDates = entryTwo.getToDate() == null || entryTwo.getFromDate().after(entryOne.getFromDate());
+			return entryTwoFromDateBetweenEntryOneDates;
+		}
 	}
 }

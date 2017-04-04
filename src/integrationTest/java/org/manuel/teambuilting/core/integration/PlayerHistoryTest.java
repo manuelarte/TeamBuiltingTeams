@@ -72,6 +72,24 @@ public class PlayerHistoryTest {
 		playerToTeamService.save(notAllowedEntry);
 	}
 
+	@Test(expected = ValidationRuntimeException.class)
+	public void testPreviousToDateIsNullSaveAnotherEntryForTheSameTeamAndInsideTimeFrame() {
+		final Player player = playerRepository.save(new Player("name", "nickname",
+			'M', "address", "imageLink"));
+		final Date teamToDate = null;
+		final Date teamFromDate = changeDate(new Date(), -10, Calendar.YEAR);
+		final Team team = teamRepository.save(new Team("name", "location", "sport", "bio", teamFromDate, teamToDate));
+
+		final Date playerToTeamFromDate = changeDate(teamFromDate, 1, Calendar.MONTH);
+		final Date playerToTeamToDate = null;
+		playerToTeamRepository.save(new PlayerToTeam(player.getId(), team.getId(), playerToTeamFromDate, playerToTeamToDate));
+		// That's original Setup, one player playing during all the history of the team, now we try to add another entry
+		final Date newPlayerToTeamFromDate = changeDate(playerToTeamFromDate, +1, Calendar.MONTH);
+		final Date newPlayerToTeamToDate = null;
+		final PlayerToTeam notAllowedEntry = new PlayerToTeam(player.getId(), team.getId(), newPlayerToTeamFromDate, newPlayerToTeamToDate);
+		playerToTeamService.save(notAllowedEntry);
+	}
+
 	@Test
 	public void testUpdateEntityWithSameValues() {
 		final Player player = playerRepository.save(new Player("name", "nickname",
