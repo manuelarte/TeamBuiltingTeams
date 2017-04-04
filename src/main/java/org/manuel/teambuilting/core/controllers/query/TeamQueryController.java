@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import org.manuel.teambuilting.core.config.Auth0Client;
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.model.Team;
-import org.manuel.teambuilting.core.services.PlayerToTeamService;
+import org.manuel.teambuilting.core.services.query.PlayerToTeamQueryService;
 import org.manuel.teambuilting.core.services.query.TeamQueryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,12 +32,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/core/teams")
 public class TeamQueryController extends AbstractQueryController<Team, String, TeamQueryService>{
 
-	private final PlayerToTeamService playerToTeamService;
+	private final PlayerToTeamQueryService playerToTeamQueryService;
 
 	@Inject
-	public TeamQueryController(final TeamQueryService teamQueryService, final PlayerToTeamService playerToTeamService, final Auth0Client auth0Client) {
+	public TeamQueryController(final TeamQueryService teamQueryService, final PlayerToTeamQueryService playerToTeamQueryService, final Auth0Client auth0Client) {
 		super(teamQueryService);
-		this.playerToTeamService = playerToTeamService;
+		this.playerToTeamQueryService = playerToTeamQueryService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class TeamQueryController extends AbstractQueryController<Team, String, T
 	public Set<Player> getPlayersForTeam(@PathVariable("teamId") final String teamId,
 			@RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") final LocalDate date) {
 		Assert.hasLength(teamId);
-		return playerToTeamService.getPlayersFor(teamId, date);
+		return playerToTeamQueryService.getPlayersFor(teamId, date);
 	}
 
 }

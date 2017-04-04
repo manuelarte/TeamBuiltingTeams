@@ -6,7 +6,8 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.manuel.teambuilting.core.model.PlayerToTeam;
-import org.manuel.teambuilting.core.services.PlayerToTeamService;
+import org.manuel.teambuilting.core.services.command.PlayerToTeamCommandService;
+import org.manuel.teambuilting.core.services.query.PlayerToTeamQueryService;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,17 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/core/players/{playerId}/teams")
 public class PlayerToTeamController {
 
-	private final PlayerToTeamService playerToTeamService;
+	private final PlayerToTeamQueryService playerToTeamQueryService;
+	private final PlayerToTeamCommandService playerToTeamCommandService;
 
 	@Inject
-	public PlayerToTeamController(final PlayerToTeamService playerToTeamService) {
-		this.playerToTeamService = playerToTeamService;
+	public PlayerToTeamController(final PlayerToTeamQueryService playerToTeamQueryService, final PlayerToTeamCommandService playerToTeamCommandService) {
+		this.playerToTeamQueryService = playerToTeamQueryService;
+		this.playerToTeamCommandService = playerToTeamCommandService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public Collection<PlayerToTeam> findPlayerHistory(@PathVariable("playerId") final String playerId) {
 		Assert.notNull(playerId);
-		return playerToTeamService.findPlayerHistory(playerId);
+		return playerToTeamQueryService.findPlayerHistory(playerId);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
@@ -36,13 +39,13 @@ public class PlayerToTeamController {
 			@Valid @RequestBody final PlayerToTeam playerToTeam) {
 		Assert.notNull(playerToTeam);
 		Assert.isTrue(playerToTeam.getPlayerId().equals(playerId));
-		return playerToTeamService.savePlayerToTeam(playerToTeam);
+		return playerToTeamCommandService.save(playerToTeam);
 	}
 
 	@RequestMapping(value = "/{playerToTeamId}", method = RequestMethod.DELETE, produces = "application/json")
 	public void deletePlayerToTeam(@PathVariable("playerId") final String playerId,
 										   @PathVariable("playerToTeamId") final String playerToTeamId) {
-		playerToTeamService.deletePlayerToTeam(playerToTeamId);
+		playerToTeamCommandService.delete(playerToTeamId);
 	}
 
 }

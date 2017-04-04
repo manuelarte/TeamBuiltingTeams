@@ -1,5 +1,12 @@
 package org.manuel.teambuilting.core.integration;
 
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+
+import javax.inject.Inject;
+
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -11,7 +18,7 @@ import org.manuel.teambuilting.core.model.Team;
 import org.manuel.teambuilting.core.repositories.PlayerRepository;
 import org.manuel.teambuilting.core.repositories.PlayerToTeamRepository;
 import org.manuel.teambuilting.core.repositories.TeamRepository;
-import org.manuel.teambuilting.core.services.PlayerToTeamService;
+import org.manuel.teambuilting.core.services.command.PlayerToTeamCommandService;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,12 +26,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 
 /**
  * Test Suit to check that it is not possible to store wrong player history
@@ -46,7 +47,7 @@ public class PlayerHistoryTest {
 	private PlayerToTeamRepository playerToTeamRepository;
 
 	@Inject
-	private PlayerToTeamService playerToTeamService;
+	private PlayerToTeamCommandService playerToTeamService;
 
 	@BeforeClass
 	public static void beforeClass() {
@@ -68,7 +69,7 @@ public class PlayerHistoryTest {
 		final Date newPlayerToTeamFromDate = changeDate(playerToTeamFromDate, +1, Calendar.MONTH);
 		final Date newPlayerToTeamToDate = changeDate(playerToTeamToDate, -1, Calendar.MONTH);
 		final PlayerToTeam notAllowedEntry = new PlayerToTeam(player.getId(), team.getId(), newPlayerToTeamFromDate, newPlayerToTeamToDate);
-		playerToTeamService.savePlayerToTeam(notAllowedEntry);
+		playerToTeamService.save(notAllowedEntry);
 	}
 
 	@Test
@@ -82,7 +83,7 @@ public class PlayerHistoryTest {
 		final Date playerToTeamFromDate = teamFromDate;
 		final Date playerToTeamToDate = teamToDate;
 		final PlayerToTeam saved = playerToTeamRepository.save(new PlayerToTeam(player.getId(), team.getId(), playerToTeamFromDate, playerToTeamToDate));
-		playerToTeamService.savePlayerToTeam(saved);
+		playerToTeamService.save(saved);
 	}
 
 	@Test
@@ -97,7 +98,7 @@ public class PlayerHistoryTest {
 		final Date playerToTeamToDate = teamToDate;
 		final PlayerToTeam saved = playerToTeamRepository.save(new PlayerToTeam(player.getId(), team.getId(), playerToTeamFromDate, playerToTeamToDate));
 		saved.setFromDate(changeDate(saved.getFromDate(), +2, Calendar.MONTH));
-		playerToTeamService.savePlayerToTeam(saved);
+		playerToTeamService.save(saved);
 	}
 
 	@Ignore
@@ -112,7 +113,7 @@ public class PlayerHistoryTest {
 		final Date playerToTeamToDate = changeDate(teamToDate, +1, Calendar.DAY_OF_MONTH);
 		final Date playerToTeamFromDate = teamFromDate;
 		final PlayerToTeam playerToTeam = new PlayerToTeam(player.getId(), team.getId(), playerToTeamFromDate, playerToTeamToDate);
-		playerToTeamService.savePlayerToTeam(playerToTeam);
+		playerToTeamService.save(playerToTeam);
 	}
 
 	private Date changeDate(final Date date, final int number, final int calendarField ) {

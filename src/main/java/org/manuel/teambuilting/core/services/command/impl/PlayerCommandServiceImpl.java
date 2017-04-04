@@ -15,45 +15,40 @@ import org.manuel.teambuilting.core.util.Util;
 import org.manuel.teambuilting.messages.PlayerDeletedEvent;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
-class PlayerCommandServiceImpl implements PlayerCommandService {
+class PlayerCommandServiceImpl extends AbstractCommandService<Player, String, PlayerRepository> implements PlayerCommandService {
 
 	private final String playerExchangeName;
-	private final PlayerRepository playerRepository;
 	private final RabbitTemplate rabbitTemplate;
 	private final Util util;
 
 	@Inject
 	public PlayerCommandServiceImpl(final @Value("${messaging.amqp.player.exchange.name}") String playerExchangeName,
-		final PlayerRepository playerRepository, final RabbitTemplate rabbitTemplate, final Util util) {
+		final PlayerRepository repository, final RabbitTemplate rabbitTemplate, final Util util) {
+		super(repository);
 		this.playerExchangeName = playerExchangeName;
-		this.playerRepository = playerRepository;
 		this.rabbitTemplate = rabbitTemplate;
 		this.util = util;
 	}
 
 	@Override
-	@PreAuthorize("hasAuthority('user') or hasAuthority('admin')")
 	@UserDataSave
 	public Player save(final Player player) {
-		return playerRepository.save(player);
+		// need to call like this because the annotation @UserDataSave
+		return super.save(player);
 	}
 
 	@Override
-	@PreAuthorize("hasAuthority('user') or hasAuthority('admin')")
 	@UserDataDeletePlayer
-	public void delete(final String playerId) {
-		final Player playerToBeDeleted = playerRepository.findOne(playerId);
-		playerRepository.delete(playerId);
-		sendPlayerDeletedEvent(playerToBeDeleted);
+	void afterDeleted(final String playerId) {
+		sendPlayerDeletedEvent(playerId);
 	}
 
-	private void sendPlayerDeletedEvent(final Player player) {
+	private void sendPlayerDeletedEvent(final String playerId) {
 		final UserProfile userProfile = util.getUserProfile().get();
-		final PlayerDeletedEvent event = new PlayerDeletedEvent(player.getId(), userProfile.getId(), new Date());
+		final PlayerDeletedEvent event = new PlayerDeletedEvent(playerId, userProfile.getId(), new Date());
 		rabbitTemplate.convertAndSend(playerExchangeName, event.getRoutingKey(), event);
 	}
 

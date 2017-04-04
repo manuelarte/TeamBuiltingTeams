@@ -1,19 +1,25 @@
 package org.manuel.teambuilting.core.controllers.command;
 
-import lombok.AllArgsConstructor;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.manuel.teambuilting.core.model.Player;
 import org.manuel.teambuilting.core.model.PlayerToTeamSportDetails;
-import org.manuel.teambuilting.core.services.PlayerToTeamSportDetailsService;
 import org.manuel.teambuilting.core.services.command.PlayerCommandService;
+import org.manuel.teambuilting.core.services.command.PlayerToTeamSportDetailsCommandService;
 import org.manuel.teambuilting.core.services.geocoding.PlayerGeocodingService;
 import org.manuel.teambuilting.core.services.query.PlayerQueryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.util.Optional;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/core/players")
@@ -23,7 +29,7 @@ public class PlayerCommandController {
 	private final PlayerCommandService playerCommandService;
 	private final PlayerGeocodingService playerGeocodingService;
 	private final PlayerQueryService playerQueryService;
-	private final PlayerToTeamSportDetailsService playerToTeamSportDetailsService;
+	private final PlayerToTeamSportDetailsCommandService playerToTeamSportDetailsService;
 
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	public Player savePlayer(@Valid @RequestBody final Player player) {
@@ -49,7 +55,7 @@ public class PlayerCommandController {
 			@Valid @RequestBody final PlayerToTeamSportDetails playerToTeamSportDetails) {
 		Assert.hasLength(playerId);
 		Assert.isTrue(playerId.equals(playerToTeamSportDetails.getPlayerId()));
-		return playerToTeamSportDetailsService.savePlayerDetails(playerToTeamSportDetails);
+		return playerToTeamSportDetailsService.save(playerToTeamSportDetails);
 	}
 
 }
