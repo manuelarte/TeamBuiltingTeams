@@ -26,9 +26,6 @@ import org.springframework.util.Assert;
 @Service
 class PlayerQueryServiceImpl extends AbstractQueryService<Player, String, PlayerRepository> implements PlayerQueryService {
 
-	private static final String PLAYER_VISITED_ROUTING_KEY = "player.visited";
-
-
 	/**
 	 * Exchange name for the players
 	 */
@@ -61,8 +58,8 @@ class PlayerQueryServiceImpl extends AbstractQueryService<Player, String, Player
 	private void sendPlayerVisitedMessage(final Player visitedPlayer) {
 		final Optional<UserProfile> userProfile = util.getUserProfile();
 		final String userId = userProfile.isPresent() ? userProfile.get().getId() : null;
-		final PlayerVisitedEvent message = new PlayerVisitedEvent(visitedPlayer.getId(), userId, new Date());
-		// rabbitTemplate.convertAndSend(playerExchangeName, PLAYER_VISITED_ROUTING_KEY, message);
+		final PlayerVisitedEvent event = new PlayerVisitedEvent(visitedPlayer.getId(), userId, new Date());
+		// rabbitTemplate.convertAndSend(playerExchangeName, event.getRoutingKey(), message);
 	}
 
 }
