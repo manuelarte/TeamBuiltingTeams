@@ -59,7 +59,7 @@ class PlayerQueryServiceImpl extends AbstractQueryService<Player, String, Player
 		final Optional<UserProfile> userProfile = util.getUserProfile();
 		final String userId = userProfile.isPresent() ? userProfile.get().getId() : null;
 		final PlayerVisitedEvent event = new PlayerVisitedEvent(visitedPlayer.getId(), userId, new Date());
-		rabbitTemplate.convertAndSend(playerExchangeName, event.getRoutingKey(), event);
+		// rabbitTemplate.convertAndSend(playerExchangeName, event.getRoutingKey(), event);
 	}
 
 }

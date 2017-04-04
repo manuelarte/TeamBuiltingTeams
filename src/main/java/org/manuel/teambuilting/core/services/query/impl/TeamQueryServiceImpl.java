@@ -58,7 +58,7 @@ class TeamQueryServiceImpl extends AbstractQueryService<Team, String, TeamReposi
 		final Optional<UserProfile> userProfile = util.getUserProfile();
 		final String userId = userProfile.isPresent() ? userProfile.get().getId() : null;
 		final TeamVisitedEvent event = new TeamVisitedEvent(visitedTeam.getId(), userId, new Date());
-		rabbitTemplate.convertAndSend(teamExchangeName, event.getRoutingKey(), event);
+		// rabbitTemplate.convertAndSend(teamExchangeName, event.getRoutingKey(), event);
 	}
 
 }
