@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface PlayerToTeamRepository extends MongoRepository<PlayerToTeam, String> {
+public interface PlayerToTeamRepository extends PlayerDependentRepository<PlayerToTeam, String>, MongoRepository<PlayerToTeam, String> {
 
 	/**
 	 * Look for all the players that have played in the team whose id is teamId
@@ -26,8 +26,6 @@ public interface PlayerToTeamRepository extends MongoRepository<PlayerToTeam, St
 	 * @return
 	 */
 	Collection<PlayerToTeam> findByToDateAfterOrToDateIsNullAndTeamId(LocalDate date, String teamId);
-
-	Collection<PlayerToTeam> findByPlayerId(String playerId);
 
 	Collection<PlayerToTeam> findByPlayerIdAndTeamId(String playerId, String teamId);
 

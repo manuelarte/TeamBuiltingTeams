@@ -1,7 +1,7 @@
 package org.manuel.teambuilting.core.controllers.query;
 
+import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -18,17 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/core/players/{playerId}/details")
-public class PlayerToTeamSportDetailsQueryController extends AbstractQueryController<PlayerToTeamSportDetails, String, PlayerToTeamSportDetailsQueryService> {
+public class PlayerToTeamSportDetailsQueryController {
+
+	private final PlayerToTeamSportDetailsQueryService queryService;
 
 	@Inject
 	public PlayerToTeamSportDetailsQueryController(final PlayerToTeamSportDetailsQueryService queryService) {
-		super(queryService);
+		this.queryService = queryService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public Set<PlayerToTeamSportDetails> findAllPlayerSportDetails(@PathVariable("playerId") final String playerId) {
+	public Collection<PlayerToTeamSportDetails> findAllPlayerSportDetails(@PathVariable("playerId") final String playerId) {
 		Assert.hasLength(playerId);
-		return queryService.findPlayerDetails(playerId);
+		return queryService.findByPlayerId(playerId);
 	}
 
 	@RequestMapping(path = "/{sport}", method = RequestMethod.GET)

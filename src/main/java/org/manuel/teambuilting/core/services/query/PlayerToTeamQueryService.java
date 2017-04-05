@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class PlayerToTeamQueryService {
+public class PlayerToTeamQueryService implements PlayerDependentQueryService<PlayerToTeam, String>{
 
 	private final PlayerToTeamRepository playerToTeamRepository;
 	private final PlayerRepository playerRepository;
@@ -40,7 +40,8 @@ public class PlayerToTeamQueryService {
 				.map(playerId -> playerRepository.findOne(playerId.getPlayerId())).collect(Collectors.toSet());
 	}
 
-	public Collection<PlayerToTeam> findPlayerHistory(final String playerId) {
+	@Override
+	public Collection<PlayerToTeam> findByPlayerId(final String playerId) {
 		return playerToTeamRepository.findByPlayerId(playerId);
 	}
 }

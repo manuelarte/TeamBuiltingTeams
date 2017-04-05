@@ -1,7 +1,7 @@
 package org.manuel.teambuilting.core.services.query.impl;
 
+import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -23,7 +23,8 @@ class PlayerToTeamSportDetailsQueryServiceImpl extends AbstractQueryService<Play
 		super(playerToTeamSportDetailsRepository);
 	}
 
-	public Set<PlayerToTeamSportDetails> findPlayerDetails(final String playerId) {
+	@Override
+	public Collection<PlayerToTeamSportDetails> findByPlayerId(final String playerId) {
 		return repository.findByPlayerId(playerId);
 	}
 

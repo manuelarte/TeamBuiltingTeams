@@ -31,7 +31,7 @@ public class PlayerToTeamController {
 	@RequestMapping(method = RequestMethod.GET)
 	public Collection<PlayerToTeam> findPlayerHistory(@PathVariable("playerId") final String playerId) {
 		Assert.notNull(playerId);
-		return playerToTeamQueryService.findPlayerHistory(playerId);
+		return playerToTeamQueryService.findByPlayerId(playerId);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
