@@ -1,35 +1,35 @@
 package org.manuel.teambuilting.core.services.geocoding;
 
+import static org.mockito.Mockito.verify;
+
 import com.google.maps.model.GeocodingResult;
-import org.hamcrest.Matchers;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.manuel.teambuilting.core.model.PlayerGeocoding;
 import org.manuel.teambuilting.core.repositories.PlayerGeocodingRepository;
-import org.manuel.teambuilting.core.services.GeocodingExamples;
 import org.manuel.teambuilting.core.services.geocoding.handlers.PlayerGeocodingResultHandler;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.inject.Inject;
-
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.manuel.teambuilting.core.util.Util;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author manuel.doncel.martos
  * @since 15-3-2017
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class PlayerGeocodingResultHandlerTest {
 
-	@Inject
+	@Mock
 	private PlayerGeocodingRepository playerGeocodingRepository;
 
 	@Test
 	public void savePlayerGeocoding() {
-		final PlayerGeocodingResultHandler handler = new PlayerGeocodingResultHandler("playerId", playerGeocodingRepository);
+		final Util util = new Util(null);
+		final PlayerGeocodingResultHandler handler = new PlayerGeocodingResultHandler("playerId", playerGeocodingRepository, util);
 		final GeocodingResult[] results = GeocodingExamples.ubeda();
 		handler.onResult(results);
-		assertThat(playerGeocodingRepository.findAll(), Matchers.hasSize(1));
+		final PlayerGeocoding expected = util.getPlayerGeocodingFrom("playerId", results);
+		verify(playerGeocodingRepository).save(expected);
 	}
 }

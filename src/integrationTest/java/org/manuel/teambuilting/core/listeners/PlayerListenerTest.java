@@ -46,7 +46,7 @@ public class PlayerListenerTest {
 	private RabbitTemplate rabbitTemplate;
 
 	@Inject
-	RabbitListenerTestHarness harness;
+	private RabbitListenerTestHarness harness;
 
 	@Test
 	public void deletePlayerTest() throws InterruptedException {
@@ -56,7 +56,7 @@ public class PlayerListenerTest {
 
 		final PlayerDeletedEvent event = PlayerDeletedEvent.builder().playerId(player.getId()).date(new Date()).userId("userId").build();
 
-		rabbitTemplate.convertAndSend(playerExchange, "player.deleted", event);
+		rabbitTemplate.convertAndSend(playerExchange, PlayerDeletedEvent.ROUTING_KEY, event);
 
 		InvocationData data = harness.getNextInvocationDataFor(PlayerListener.LISTENER_ID, 5, TimeUnit.SECONDS);
 		assertNotNull(data);
