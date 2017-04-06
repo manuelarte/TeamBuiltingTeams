@@ -1,10 +1,10 @@
 package org.manuel.teambuilting.core.exceptions;
 
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author manuel.doncel.martos
