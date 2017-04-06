@@ -81,7 +81,7 @@ public class Util {
 		else if (entryOne.getFromDate().after(entryTwo.getFromDate())) {
 			toReturn = isOverlapping(entryTwo, entryOne);
 		} else {
-			final boolean entryTwoFromDateBetweenEntryOneDates = entryTwo.getToDate() == null || entryTwo.getFromDate().after(entryOne.getFromDate());
+			final boolean entryTwoFromDateBetweenEntryOneDates = entryOne.getToDate() == null || entryTwo.getFromDate().before(entryOne.getToDate());
 			toReturn = entryTwoFromDateBetweenEntryOneDates;
 		}
 		return toReturn;
