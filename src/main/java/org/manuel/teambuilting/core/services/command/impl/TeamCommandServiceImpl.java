@@ -4,11 +4,6 @@
 package org.manuel.teambuilting.core.services.command.impl;
 
 import com.auth0.authentication.result.UserProfile;
-
-import java.util.Date;
-
-import javax.inject.Inject;
-
 import org.manuel.teambuilting.core.aspects.UserDataSave;
 import org.manuel.teambuilting.core.model.Team;
 import org.manuel.teambuilting.core.repositories.TeamRepository;
@@ -18,6 +13,9 @@ import org.manuel.teambuilting.messages.TeamRegisteredEvent;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+import java.util.Date;
 
 /**
  * @author Manuel Doncel Martos
@@ -53,10 +51,10 @@ class TeamCommandServiceImpl extends AbstractCommandService<Team, String, TeamRe
 
 	@Override
 	void afterSaved(final Team savedTeam) {
-		sendTeamCreatedEvent(savedTeam);
+		sendTeamRegisteredEvent(savedTeam);
 	}
 
-	private void sendTeamCreatedEvent(final Team savedTeam) {
+	private void sendTeamRegisteredEvent(final Team savedTeam) {
 		final UserProfile userProfile = util.getUserProfile().get();
 		final TeamRegisteredEvent event = new TeamRegisteredEvent(savedTeam.getId(), userProfile.getId(), new Date());
 		rabbitTemplate.convertAndSend(teamExchangeName, event.getRoutingKey(), event);

@@ -44,7 +44,7 @@ public enum FootballPosition implements TeamSportPosition {
 	CAM("Centre Attacking  Midfield", CDM.x, 1-CDM.y),
 	RCM("Right Centre Midfield", 1-LCM.x, LCM.y),
 	RM("Right Midfield", 1-LM.x, LM.y),
-	ST("Striker", 0, 0.75),
+	ST("Striker", 0.5, 0.75),
 	CF("Center forward", 0.5, 0.9),
 	LW("Left winger", 0.2, 0.8),
 	RW("Right winger", 1-LW.x, LW.y);
