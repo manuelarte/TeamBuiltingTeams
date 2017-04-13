@@ -1,4 +1,4 @@
-# Microservice TeamBuiltingCore
+# Microservice TeamBuiltingTeams
 
 This microservice contains the information related to the teams and players.
 

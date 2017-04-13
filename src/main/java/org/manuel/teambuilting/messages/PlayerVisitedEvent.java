@@ -2,6 +2,7 @@ package org.manuel.teambuilting.messages;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ public class PlayerVisitedEvent {
     public static final String ROUTING_KEY = "player.visited";
 
     @NotNull
-    private final String playerId;
+    private final BigInteger playerId;
 
     private final String userId;
 

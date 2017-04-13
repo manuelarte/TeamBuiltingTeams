@@ -1,5 +1,5 @@
 info:
-  name: teambuiltingcore
+  name: teambuiltingteams
   description: Team Builting Application, share your team to the rest of the world!
 
 ---
@@ -17,12 +17,6 @@ messaging:
         name: TEAMBUILTING.E.PLAYER
         durable: true
         autodelete: false
-      queue:
-        name: TEAMBUILTING.Q.CORE.PLAYER
-        binding: player.deleted
-        durable: true
-        autodelete: false
-
 
 google:
   api:
@@ -33,7 +27,7 @@ google:
 spring:
   profiles: production
   data.mongodb:
-    database: teambuilting # Database name.
+    database: teambuiltingteams # Database name.
     host: ${MONGODB_HOST:localhost} # Mongo server host.
     port: ${MONGODB_PORT} # Mongo server port.
     username: ${MONGODB_USERNAME} # Login user of the mongo server.
