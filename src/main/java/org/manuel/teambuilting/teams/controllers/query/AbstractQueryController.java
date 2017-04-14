@@ -9,7 +9,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import org.manuel.teambuilting.exceptions.ValidationRuntimeException;
-import org.manuel.teambuilting.teams.services.query.BaseQueryService;
+import org.manuel.teambuilting.core.services.query.BaseQueryService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;

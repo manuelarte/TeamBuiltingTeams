@@ -2,7 +2,7 @@ package org.manuel.teambuilting.teams.services.command.impl;
 
 import java.io.Serializable;
 
-import org.manuel.teambuilting.teams.services.command.BaseCommandService;
+import org.manuel.teambuilting.core.services.command.BaseCommandService;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;

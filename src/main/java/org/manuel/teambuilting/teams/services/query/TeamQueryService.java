@@ -1,5 +1,6 @@
 package org.manuel.teambuilting.teams.services.query;
 
+import org.manuel.teambuilting.core.services.query.BaseQueryService;
 import org.manuel.teambuilting.teams.model.Team;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

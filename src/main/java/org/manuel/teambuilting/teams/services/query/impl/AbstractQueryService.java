@@ -3,7 +3,7 @@ package org.manuel.teambuilting.teams.services.query.impl;
 import java.io.Serializable;
 import java.util.Optional;
 
-import org.manuel.teambuilting.teams.services.query.BaseQueryService;
+import org.manuel.teambuilting.core.services.query.BaseQueryService;
 import org.springframework.data.repository.CrudRepository;
 
 /**
