@@ -1,15 +1,6 @@
-package org.manuel.teambuilting.core.controllers.query;
-
-import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+package org.manuel.teambuilting.teams.controllers.query;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.UUID;
-
-import javax.inject.Inject;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +13,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.inject.Inject;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author manuel.doncel.martos
@@ -51,7 +49,7 @@ public class TeamQueryControllerTest {
 		final Team expected = Team.builder().name("name").build();
 		teamRepository.save(expected);
 
-		final String contentAsString = mvc.perform(get("/core/teams/" + expected.getId(), "")).andExpect(status().isOk()).andReturn().getResponse()
+		final String contentAsString = mvc.perform(get("/teams/" + expected.getId(), "")).andExpect(status().isOk()).andReturn().getResponse()
 			.getContentAsString();
 		final Team actual = mapper.readValue(contentAsString, Team.class);
 		assertEquals(expected, actual);
@@ -60,7 +58,7 @@ public class TeamQueryControllerTest {
 	@Test
 	public void findOneTeamThatDoesNotExist() throws Exception {
 		final String id = UUID.randomUUID().toString();
-		final String contentAsString = mvc.perform(get("/core/teams/" + id, "")).andExpect(status().is4xxClientError()).andReturn().getResponse()
+		final String contentAsString = mvc.perform(get("/teams/" + id, "")).andExpect(status().is4xxClientError()).andReturn().getResponse()
 			.getContentAsString();
 
 		final ExceptionMessage actual = mapper.readValue(contentAsString, ExceptionMessage.class);

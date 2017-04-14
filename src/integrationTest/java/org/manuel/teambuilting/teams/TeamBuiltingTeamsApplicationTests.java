@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.core;
+package org.manuel.teambuilting.teams;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

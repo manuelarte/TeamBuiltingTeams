@@ -5,6 +5,7 @@ package org.manuel.teambuilting.teams.controllers.query;
 
 import javax.inject.Inject;
 
+import org.manuel.teambuilting.core.controllers.query.AbstractQueryController;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.services.query.TeamQueryService;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/teams")
-public class TeamQueryController extends AbstractQueryController<Team, String, TeamQueryService>{
+public class TeamQueryController extends AbstractQueryController<Team, String, TeamQueryService> {
 
 	@Inject
 	public TeamQueryController(final TeamQueryService teamQueryService) {
