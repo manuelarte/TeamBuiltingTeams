@@ -2,6 +2,8 @@ info:
   name: teambuiltingteams
   description: Team Builting Teams Service, microservice to store everything related to the teams
 
+server:
+  port: ${PORT:8090}
 ---
 
 # Queue configuration
