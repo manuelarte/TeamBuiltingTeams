@@ -36,10 +36,10 @@ spring:
     password: ${MONGODB_PASSWORD} # Login password of the mongo server.
     repositories.enabled: true # Enable Mongo repositories.
   rabbitmq:
-      host: ${RABBITMQ_HOST}
+      host: ${RABBITMQ_HOST:localhost}
       virtual-host: ${RABBITMQ_VIRTUAL_HOST}
-      username: ${RABBITMQ_USERNAME}
-      password: ${RABBITMQ_PASSWORD}
+      username: ${RABBITMQ_USERNAME:guest}
+      password: ${RABBITMQ_PASSWORD:guest}
 
 ---
 
