@@ -2,13 +2,12 @@ package org.manuel.teambuilting.teams.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.text.SimpleDateFormat;
-
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.text.SimpleDateFormat;
 
 /**
  * @author Manuel Doncel Martos
@@ -18,6 +17,8 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig  {
 
     private static final String TIMESTAMP_FORMAT = "yyyy-MM-dd\'T\'HH:mm:ss.SSSZ";
+
+    // TODO declare the echange
 
     @Bean(name = "eventMessageConverter")
     public MessageConverter messageConverter() {

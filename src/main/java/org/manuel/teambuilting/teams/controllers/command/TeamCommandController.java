@@ -22,7 +22,7 @@ import java.util.Optional;
  *
  */
 @RestController
-@RequestMapping("/core/teams")
+@RequestMapping("/teams")
 @AllArgsConstructor
 public class TeamCommandController {
 	
