@@ -46,7 +46,6 @@ public class Util {
 			map.put(addressComponent.types[0].toCanonicalLiteral(), addressComponent.longName);
 		}
 		final LatLng location = results[0].geometry.location;
-		final String placeId = results[0].placeId;
 		return TeamGeocoding.builder().addressComponents(map).teamId(teamId)
 			.lat(location.lat).lng(location.lng).build();
 	}

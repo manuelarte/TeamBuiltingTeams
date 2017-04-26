@@ -2,16 +2,16 @@ package org.manuel.teambuilting.teams.services.query.impl;
 
 import com.auth0.authentication.result.UserProfile;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Optional;
 
 import javax.inject.Inject;
 
+import org.manuel.teambuilting.messages.TeamVisitedEvent;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.repositories.TeamRepository;
 import org.manuel.teambuilting.teams.services.query.TeamQueryService;
 import org.manuel.teambuilting.teams.util.Util;
-import org.manuel.teambuilting.messages.TeamVisitedEvent;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,8 +25,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 class TeamQueryServiceImpl extends AbstractQueryService<Team, String, TeamRepository> implements TeamQueryService {
-
-	private static final String TEAM_VISITED_ROUTING_KEY = "team.visited";
 
 	private String teamExchangeName;
 	private final RabbitTemplate rabbitTemplate;
@@ -57,7 +55,7 @@ class TeamQueryServiceImpl extends AbstractQueryService<Team, String, TeamReposi
 	private void sendTeamVisitedMessage(final Team visitedTeam) {
 		final Optional<UserProfile> userProfile = util.getUserProfile();
 		final String userId = userProfile.isPresent() ? userProfile.get().getId() : null;
-		final TeamVisitedEvent event = new TeamVisitedEvent(visitedTeam.getId(), userId, new Date());
+		final TeamVisitedEvent event = new TeamVisitedEvent(visitedTeam.getId(), userId, Instant.now());
 		// rabbitTemplate.convertAndSend(teamExchangeName, event.getRoutingKey(), event);
 	}
 
