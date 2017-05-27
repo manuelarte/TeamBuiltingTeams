@@ -1,12 +1,6 @@
 package org.manuel.teambuilting.teams.services.query.impl;
 
-import com.auth0.authentication.result.UserProfile;
-
-import java.time.Instant;
-import java.util.Optional;
-
-import javax.inject.Inject;
-
+import com.auth0.Auth0User;
 import org.manuel.teambuilting.messages.TeamVisitedEvent;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.repositories.TeamRepository;
@@ -18,6 +12,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+import java.time.Instant;
+import java.util.Optional;
 
 /**
  * @author manuel.doncel.martos
@@ -53,8 +51,8 @@ class TeamQueryServiceImpl extends AbstractQueryService<Team, String, TeamReposi
 	}
 
 	private void sendTeamVisitedMessage(final Team visitedTeam) {
-		final Optional<UserProfile> userProfile = util.getUserProfile();
-		final String userId = userProfile.isPresent() ? userProfile.get().getId() : null;
+		final Optional<Auth0User> userProfile = util.getUserProfile();
+		final String userId = userProfile.isPresent() ? userProfile.get().getUserId() : null;
 		final TeamVisitedEvent event = new TeamVisitedEvent(visitedTeam.getId(), userId, Instant.now());
 		// rabbitTemplate.convertAndSend(teamExchangeName, event.getRoutingKey(), event);
 	}

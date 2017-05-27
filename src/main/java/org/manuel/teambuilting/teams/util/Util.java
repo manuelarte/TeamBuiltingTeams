@@ -1,23 +1,22 @@
 package org.manuel.teambuilting.teams.util;
 
-import com.auth0.authentication.result.UserProfile;
-import com.auth0.spring.security.api.Auth0JWTToken;
+import com.auth0.Auth0Client;
+import com.auth0.Auth0User;
+import com.auth0.Tokens;
+import com.auth0.spring.security.api.authentication.AuthenticationJsonWebToken;
 import com.google.maps.model.AddressComponent;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.inject.Inject;
-
-import org.manuel.teambuilting.teams.config.Auth0Client;
 import org.manuel.teambuilting.teams.model.TeamGeocoding;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author manuel.doncel.martos
@@ -33,9 +32,14 @@ public class Util {
 		this.auth0Client = auth0Client;
 	}
 
-	public Optional<UserProfile> getUserProfile() {
+	public Optional<Auth0User> getUserProfile() {
+		Optional<Auth0User> toReturn = Optional.empty();
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return auth instanceof Auth0JWTToken ? Optional.of(auth0Client.getUser((Auth0JWTToken) auth)) : Optional.empty();
+		if (auth instanceof AuthenticationJsonWebToken) {
+			final String token = ((AuthenticationJsonWebToken) auth).getToken();
+			toReturn = Optional.of(auth0Client.getUserProfile(new Tokens(token, null, "JWT", null)));
+		}
+		return toReturn;
 	}
 
 	public TeamGeocoding getTeamGeocodingFrom(final String teamId, final GeocodingResult[] results) {

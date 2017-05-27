@@ -140,7 +140,9 @@ dependencies {
 	compile "org.springframework:spring-aspects:5.0.0.M4"
 	compile "org.springframework.boot:spring-boot-starter-amqp"
 	compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
-	compile 'com.auth0:auth0-spring-security-api:0.3.3'
+
+	compile 'com.auth0:auth0-spring-security-mvc:1.2.3'
+	compile 'com.auth0:auth0-spring-security-api:1.0.0-rc.2'
 	
 	compile 'javax.inject:javax.inject:1'
 

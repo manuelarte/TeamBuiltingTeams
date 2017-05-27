@@ -3,7 +3,7 @@
  */
 package org.manuel.teambuilting.teams.controllers.command;
 
-import com.auth0.spring.security.api.Auth0JWTToken;
+import com.auth0.spring.security.api.authentication.AuthenticationJsonWebToken;
 import lombok.AllArgsConstructor;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.services.command.TeamCommandService;
@@ -41,7 +41,7 @@ public class TeamCommandController {
 	/**
 	 *  Simple illustration only
 	 */
-	private void adminChecks(final Auth0JWTToken principal) {
+	private void adminChecks(final AuthenticationJsonWebToken principal) {
 		for(final GrantedAuthority grantedAuthority: principal.getAuthorities()) {
 			final String authority = grantedAuthority.getAuthority();
 			if (("ROLE_ADMIN".equals(authority))) {
