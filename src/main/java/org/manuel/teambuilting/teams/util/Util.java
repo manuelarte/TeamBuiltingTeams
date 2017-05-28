@@ -7,13 +7,13 @@ import com.auth0.spring.security.api.authentication.AuthenticationJsonWebToken;
 import com.google.maps.model.AddressComponent;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
+import lombok.AllArgsConstructor;
 import org.manuel.teambuilting.teams.model.TeamGeocoding;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -23,14 +23,10 @@ import java.util.Optional;
  * @since 11-3-2017
  */
 @Component
+@AllArgsConstructor
 public class Util {
 
 	private final Auth0Client auth0Client;
-
-	@Inject
-	public Util(final Auth0Client auth0Client) {
-		this.auth0Client = auth0Client;
-	}
 
 	public Optional<Auth0User> getUserProfile() {
 		Optional<Auth0User> toReturn = Optional.empty();
