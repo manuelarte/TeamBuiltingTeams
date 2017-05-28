@@ -1,27 +1,30 @@
 package org.manuel.teambuilting.teams.services.geocoding;
 
-import static org.mockito.Mockito.verify;
-
 import com.google.maps.model.GeocodingResult;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.manuel.teambuilting.teams.model.TeamGeocoding;
-import org.manuel.teambuilting.teams.services.geocoding.handlers.TeamGeocodingResultHandler;
 import org.manuel.teambuilting.teams.repositories.TeamGeocodingRepository;
+import org.manuel.teambuilting.teams.services.geocoding.handlers.TeamGeocodingResultHandler;
 import org.manuel.teambuilting.teams.util.Util;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * @author manuel.doncel.martos
  * @since 15-3-2017
  */
-@RunWith(MockitoJUnitRunner.class)
 public class TeamGeocodingResultHandlerTest {
 
 	@Mock
 	private TeamGeocodingRepository teamGeocodingRepository;
+
+	@BeforeEach
+    public void beforeEach() {
+	    initMocks(this);
+    }
 
 	@Test
 	public void savePlayerGeocoding() {

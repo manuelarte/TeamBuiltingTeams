@@ -2,16 +2,14 @@ package org.manuel.teambuilting.teams.services.command.impl;
 
 import com.auth0.Auth0User;
 import com.auth0.authentication.result.UserProfile;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.manuel.teambuilting.messages.TeamRegisteredEvent;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.repositories.TeamRepository;
 import org.manuel.teambuilting.teams.util.Util;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.util.ArrayList;
@@ -19,15 +17,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * @author manuel.doncel.martos
  * @since 5-4-2017
  */
-@RunWith(MockitoJUnitRunner.class)
 public class TeamCommandServiceImplTest {
 
 	@Mock
@@ -40,8 +39,9 @@ public class TeamCommandServiceImplTest {
 	@InjectMocks
 	private TeamCommandServiceImpl teamCommandService;
 
-	@Before
+	@BeforeEach
 	public void setup() {
+		initMocks(this);
 	}
 
 	@Test
@@ -55,11 +55,12 @@ public class TeamCommandServiceImplTest {
 		verify(rabbitTemplate, times(1)).convertAndSend(any(String.class), eq(TeamRegisteredEvent.ROUTING_KEY), any(TeamRegisteredEvent.class));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testSaveNullTeam() {
 		final Optional<Auth0User> userProfile = Optional.of(createUserProfile());
 		when(util.getUserProfile()).thenReturn(userProfile);
-		teamCommandService.save(null);
+		assertThrows(IllegalArgumentException.class, ()->
+				teamCommandService.save(null));;
 	}
 
 	private Auth0User createUserProfile() {
