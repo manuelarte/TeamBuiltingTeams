@@ -141,6 +141,7 @@ repositories {
 	mavenLocal()
 	maven { url 'https://repo.spring.io/milestone' }
 	mavenCentral()
+	maven { url "$projectDir/repo" }
 }
 
 dependencies {
@@ -151,6 +152,9 @@ dependencies {
 	compile "org.springframework:spring-aspects:5.0.0.M4"
 	compile "org.springframework.boot:spring-boot-starter-amqp"
 	compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    compile 'org.manuel.teambuilting:teambuilting-messages:0.1.0-SNAPSHOT'
+    compile 'org.manuel.teambuilting:teambuilting-exceptions:0.1.0-SNAPSHOT'
 
 	compile 'com.auth0:auth0-spring-security-mvc:1.2.3'
 	compile 'com.auth0:auth0-spring-security-api:1.0.0-rc.2'
@@ -206,3 +210,11 @@ dependencyUpdates.resolutionStrategy = {
 task stage {
     dependsOn build
 }
+
+task procfileTxt() << {
+    def file = new File("$projectDir/Procfile")
+    file.createNewFile()
+    file.text = """web: java -Dserver.port=\$PORT -Dspring.profiles.active=production -jar build/libs/${microserviceName}-${version}.jar"""
+}
+
+build.finalizedBy(procfileTxt)
