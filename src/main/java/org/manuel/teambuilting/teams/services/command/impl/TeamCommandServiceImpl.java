@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.time.Instant;
+import java.util.Date;
 
 /**
  * @author Manuel Doncel Martos
@@ -56,7 +56,7 @@ class TeamCommandServiceImpl extends AbstractCommandService<Team, String, TeamRe
 
 	private void sendTeamRegisteredEvent(final Team savedTeam) {
 		final Auth0User userProfile = util.getUserProfile().get();
-		final TeamRegisteredEvent event = new TeamRegisteredEvent(savedTeam.getId(), userProfile.getUserId(), Instant.now());
+		final TeamRegisteredEvent event = new TeamRegisteredEvent(savedTeam.getId(), userProfile.getUserId(), new Date());
 		rabbitTemplate.convertAndSend(teamExchangeName, event.getRoutingKey(), event);
 	}
 

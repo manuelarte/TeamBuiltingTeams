@@ -14,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -53,7 +53,7 @@ class TeamQueryServiceImpl extends AbstractQueryService<Team, String, TeamReposi
 	private void sendTeamVisitedMessage(final Team visitedTeam) {
 		final Optional<Auth0User> userProfile = util.getUserProfile();
 		final String userId = userProfile.isPresent() ? userProfile.get().getUserId() : null;
-		final TeamVisitedEvent event = new TeamVisitedEvent(visitedTeam.getId(), userId, Instant.now());
+		final TeamVisitedEvent event = new TeamVisitedEvent(visitedTeam.getId(), userId, new Date());
 		// rabbitTemplate.convertAndSend(teamExchangeName, event.getRoutingKey(), event);
 	}
 
