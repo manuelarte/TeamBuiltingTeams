@@ -26,14 +26,11 @@ public class UserDataAspect {
 	@AfterReturning(
 		pointcut="@annotation(org.manuel.teambuilting.teams.aspects.UserDataSave)",
 		returning="retVal")
-	public void saveEntityToUserData(final JoinPoint call, Object retVal) {
+	public void saveEntityToUserData(final JoinPoint call, Team retVal) {
 		final Auth0User user = util.getUserProfile().get();
 		final UserData userData = userService.getOrCreateUserData(user.getUserId());
-		if (retVal instanceof Team) {
-			userData.addTeamAdminByUser(((Team) retVal).getId());
-			userService.update(userData);
-		}
-
+		userData.addTeamAdminByUser(retVal.getId());
+		userService.update(userData);
 	}
 
 }

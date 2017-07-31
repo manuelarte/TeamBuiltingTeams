@@ -153,8 +153,9 @@ dependencies {
 	compile "org.springframework.boot:spring-boot-starter-amqp"
 	compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
-    compile 'org.manuel.teambuilting:teambuilting-messages:0.1.0-SNAPSHOT'
-    compile 'org.manuel.teambuilting:teambuilting-exceptions:0.1.0-SNAPSHOT'
+	compile 'org.manuel.teambuilting:teambuilting-messages:0.1.0-SNAPSHOT'
+	compile 'org.manuel.teambuilting:teambuilting-core:0.1.0-SNAPSHOT'
+	compile 'org.manuel.teambuilting:teambuilting-exceptions:0.1.0-SNAPSHOT'
 
 	compile 'com.auth0:auth0-spring-security-mvc:1.2.3'
 	compile 'com.auth0:auth0-spring-security-api:1.0.0-rc.2'

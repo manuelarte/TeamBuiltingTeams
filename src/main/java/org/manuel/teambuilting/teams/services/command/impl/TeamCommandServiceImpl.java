@@ -4,6 +4,7 @@
 package org.manuel.teambuilting.teams.services.command.impl;
 
 import com.auth0.Auth0User;
+import org.manuel.teambuilting.core.services.command.AbstractCommandService;
 import org.manuel.teambuilting.messages.TeamRegisteredEvent;
 import org.manuel.teambuilting.teams.aspects.UserDataSave;
 import org.manuel.teambuilting.teams.model.Team;
@@ -50,7 +51,7 @@ class TeamCommandServiceImpl extends AbstractCommandService<Team, String, TeamRe
 	}
 
 	@Override
-	void afterSaved(final Team savedTeam) {
+	protected void afterSaved(final Team savedTeam) {
 		sendTeamRegisteredEvent(savedTeam);
 	}
 

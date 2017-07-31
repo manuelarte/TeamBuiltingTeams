@@ -1,26 +1,20 @@
 package org.manuel.teambuilting.teams.model;
 
-import java.util.Set;
-
-import javax.validation.constraints.NotNull;
-
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.stereotype.Component;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 /**
  * @author Manuel on 11/12/2016.
  */
-@Component
+@Document
 @Builder(toBuilder = true)
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserData {
