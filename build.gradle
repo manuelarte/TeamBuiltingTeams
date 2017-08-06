@@ -212,10 +212,10 @@ task stage {
     dependsOn build
 }
 
-task procfileTxt() << {
+task procfileFile() << {
     def file = new File("$projectDir/Procfile")
     file.createNewFile()
     file.text = """web: java -Dserver.port=\$PORT -Dspring.profiles.active=production -jar build/libs/${microserviceName}-${version}.jar"""
 }
 
-build.finalizedBy(procfileTxt)
+build.finalizedBy(procfileFile)
