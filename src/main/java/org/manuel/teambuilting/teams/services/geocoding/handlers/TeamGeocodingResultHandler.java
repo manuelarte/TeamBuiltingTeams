@@ -4,7 +4,7 @@ import com.google.maps.PendingResult.Callback;
 import com.google.maps.model.GeocodingResult;
 
 import org.manuel.teambuilting.teams.repositories.TeamGeocodingRepository;
-import org.manuel.teambuilting.teams.util.Util;
+import org.manuel.teambuilting.teams.util.TeamUtil;
 import org.springframework.util.Assert;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +18,10 @@ public class TeamGeocodingResultHandler implements Callback<GeocodingResult[]> {
 
 	private final String teamId;
 	private final TeamGeocodingRepository repository;
-	private final Util util;
+	private final TeamUtil util;
 
 	public TeamGeocodingResultHandler(final String teamId, final TeamGeocodingRepository repository,
-		final Util util) {
+		final TeamUtil util) {
 		Assert.hasLength(teamId);
 		Assert.notNull(repository);
 		this.teamId = teamId;

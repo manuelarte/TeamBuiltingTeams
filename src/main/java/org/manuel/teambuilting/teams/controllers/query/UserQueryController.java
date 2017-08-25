@@ -3,7 +3,7 @@ package org.manuel.teambuilting.teams.controllers.query;
 import lombok.AllArgsConstructor;
 import org.manuel.teambuilting.teams.model.UserData;
 import org.manuel.teambuilting.teams.services.UserService;
-import org.manuel.teambuilting.teams.util.Util;
+import org.manuel.teambuilting.core.utils.Util;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

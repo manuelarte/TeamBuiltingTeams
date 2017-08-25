@@ -10,7 +10,7 @@ import org.manuel.teambuilting.teams.aspects.UserDataSave;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.repositories.TeamRepository;
 import org.manuel.teambuilting.teams.services.command.TeamCommandService;
-import org.manuel.teambuilting.teams.util.Util;
+import org.manuel.teambuilting.core.utils.Util;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

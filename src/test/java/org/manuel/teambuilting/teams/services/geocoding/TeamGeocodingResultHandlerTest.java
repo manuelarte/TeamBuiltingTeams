@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.manuel.teambuilting.teams.model.TeamGeocoding;
 import org.manuel.teambuilting.teams.repositories.TeamGeocodingRepository;
 import org.manuel.teambuilting.teams.services.geocoding.handlers.TeamGeocodingResultHandler;
-import org.manuel.teambuilting.teams.util.Util;
+import org.manuel.teambuilting.teams.util.TeamUtil;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.verify;
@@ -28,7 +28,7 @@ public class TeamGeocodingResultHandlerTest {
 
 	@Test
 	public void savePlayerGeocoding() {
-		final Util util = new Util(null);
+		final TeamUtil util = new TeamUtil();
 		final TeamGeocodingResultHandler handler = new TeamGeocodingResultHandler("playerId", teamGeocodingRepository, util);
 		final GeocodingResult[] results = GeocodingExamples.ubeda();
 		handler.onResult(results);

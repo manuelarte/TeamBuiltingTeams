@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.manuel.teambuilting.messages.TeamRegisteredEvent;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.repositories.TeamRepository;
-import org.manuel.teambuilting.teams.util.Util;
+import org.manuel.teambuilting.core.utils.Util;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

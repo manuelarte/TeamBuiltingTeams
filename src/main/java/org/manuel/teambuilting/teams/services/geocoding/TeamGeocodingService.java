@@ -4,10 +4,11 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.GeocodingApiRequest;
 
+import lombok.AllArgsConstructor;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.repositories.TeamGeocodingRepository;
 import org.manuel.teambuilting.teams.services.geocoding.handlers.TeamGeocodingResultHandler;
-import org.manuel.teambuilting.teams.util.Util;
+import org.manuel.teambuilting.teams.util.TeamUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -16,18 +17,12 @@ import org.springframework.util.Assert;
  * @since 26/03/2017.
  */
 @Service
+@AllArgsConstructor
 public class TeamGeocodingService {
 
     private final GeoApiContext geoApiContext;
     private final TeamGeocodingRepository teamGeocodingRepository;
-    private final Util util;
-
-    public TeamGeocodingService(final GeoApiContext geoApiContext, final TeamGeocodingRepository teamGeocodingRepository,
-        final Util util) {
-        this.geoApiContext = geoApiContext;
-        this.teamGeocodingRepository = teamGeocodingRepository;
-        this.util = util;
-    }
+    private final TeamUtil util;
 
     public void asyncReq(final Team team) {
         Assert.notNull(team);

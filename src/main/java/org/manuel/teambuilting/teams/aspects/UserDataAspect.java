@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.manuel.teambuilting.teams.model.Team;
 import org.manuel.teambuilting.teams.model.UserData;
 import org.manuel.teambuilting.teams.services.UserService;
-import org.manuel.teambuilting.teams.util.Util;
+import org.manuel.teambuilting.core.utils.Util;
 import org.springframework.stereotype.Component;
 
 /**
